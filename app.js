@@ -1,5 +1,6 @@
 var express = require('express'),
 	app = express(),
+	fs = require('fs'),
 	routes = require('./routes'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
@@ -64,5 +65,10 @@ io.sockets.on('connection', function(socket){
 
 app.get('/teamInfo', function(req,res){
 	console.log(req.query);
-	res.send('wheed')
+	var reqFile = 'world-cup/2014--brazil/squads/'+req.query.country+'.txt';
+	fs.readFile(reqFile, function(err,data){
+		if(err) throw err
+		res.send(data);
+	})
+	//res.send('wheed')
 });
