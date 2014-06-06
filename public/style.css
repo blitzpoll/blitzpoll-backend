@@ -2,3 +2,8 @@
 .accordion-group{
   background: white;
 }
+
+.info-team{
+	float:left;
+	margin-right:5px;
+}

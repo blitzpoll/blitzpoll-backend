@@ -1,6 +1,14 @@
 {
   "name": "journalist-backend",
   "version": "0.1.0",
+  "description": "Backend-Frontend for Journalist",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaxGfeller/hacksports-backend.git"
+  },
+  "author": "Dominik Schläpfer <doemsche@gmx.ch>",
+  "homepage": "https://github.com/MaxGfeller/hacksports-backend",
   "dependencies": {
     "socket.io": "1.0.3",
     "express": "4.4.0",

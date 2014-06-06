@@ -23,7 +23,6 @@ jQuery(function($){
     clearInterval(counter);
   }
   var activateTimer = function(data){
-
     readyindicator.hide();
     countdownindicator.show();
     //offset to compensate latency:
@@ -47,9 +46,7 @@ jQuery(function($){
     //countdown.text(data.time);
   };
 
-
-
-  $('#newquestion-form').submit(function(e){
+ $('#newquestion-form').submit(function(e){
     e.preventDefault();
     clearTimer();
     var newQuestion = {
@@ -60,20 +57,29 @@ jQuery(function($){
     socket.emit('new question', newQuestion);  	
   });
 
-  socket.on('new question added', function(data){
+ socket.on('new question added', function(data){
     $('#q-container').append('<div>'+data.data.question+'</div>');
     activateTimer(data.data);
     resetForm();
   });
 
-  socket.on('load old questions', function(docs){
+ socket.on('load old questions', function(docs){
     for(var i= docs.length-1; i>0; i--){
       displayQuestions(docs[i]);
     }
 
-  });
+ });
 
-  function displayQuestions(data){
-    $('#q-container').append('<div>'+data.question+'</div>');
-  }
-})
+ function displayQuestions(data){
+   $('#q-container').append('<div>'+data.question+'</div>');
+ };
+
+ $('.info-team').click(function(e){
+  e.preventDefault();
+  var country = $(this).children('a').attr('href');
+  $.get('/teamInfo', {country:country}, function(data){
+    $('#team-container').html(data);
+  });
+ });
+
+});

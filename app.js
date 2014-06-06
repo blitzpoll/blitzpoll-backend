@@ -60,3 +60,9 @@ io.sockets.on('connection', function(socket){
 		});
 	});
 });
+
+
+app.get('/teamInfo', function(req,res){
+	console.log(req.query);
+	res.send('wheed')
+});

@@ -46,6 +46,7 @@ html
                   input#time-frame
             button#sendquestion.btn.btn-primary Senden
       div.span5
+        //---------------------
         div.accordion#accordion1
           div.accordion-group
             div.accordion-heading
@@ -63,6 +64,7 @@ html
                 form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
                  input(type="file", name="file")
                  input(type="submit")
+        //---------------------
         div.accordion#accordion2
           div.accordion-group
             div.accordion-heading
@@ -71,7 +73,29 @@ html
             div#collapseTwo.accordion-body.collapse(style="height:0px;")
               div.accordion-inner
                 div#q-container
-                  
+        //---------------------
+        div.accordion#accordion3
+          div.accordion-group
+            div.accordion-heading
+              a.accordion-toggle.collapsed(data-toggle="collapse" 
+                data-parent="accordion3" href="#collapseThree") Team Info
+            div#collapseThree.accordion-body.collapse(style="height:0px;")
+              div.accordion-inner
+                div#q-container
+                  ul(style="list-style:none;")
+                    li.info-team 
+                      a(href="ar") ar
+                    li.info-team 
+                      a(href="au") au
+                    li.info-team 
+                      a(href="be") be
+                    li.info-team 
+                      a(href="be") be
+                    li.info-team 
+                      a(href="br") br
+                    li.info-team 
+                      a(href="ch") ch
+                div#team-container
 
 
 
