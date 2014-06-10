@@ -7,3 +7,16 @@
 	float:left;
 	margin-right:5px;
 }
+
+#team-container{
+	font-family: Courier;
+	font-size: 10px;
+}
+
+.teamlist{
+	list-style: none;
+}
+
+.teamlist-item{
+
+}

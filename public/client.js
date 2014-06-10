@@ -78,7 +78,7 @@ jQuery(function($){
   e.preventDefault();
   var country = $(this).children('a').attr('href');
   $.get('/teamInfo', {country:country}, function(data){
-    $('#team-container').html(data);
+    $('#team-container').html('<div>'+data+'</div>');
   });
  });
 

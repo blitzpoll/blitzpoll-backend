@@ -7,7 +7,8 @@ var express = require('express'),
 	url = require('url'),
 	mongoose = require('mongoose'),
 	dbHost = process.env.DBHOST || 'mongodb://127.0.0.1/questions',
-	net = require('net');
+	net = require('net'),
+	lineReader = require('line-reader');
 
 server.listen(5000);
 
@@ -64,11 +65,43 @@ io.sockets.on('connection', function(socket){
 
 
 app.get('/teamInfo', function(req,res){
-	console.log(req.query);
 	var reqFile = 'world-cup/2014--brazil/squads/'+req.query.country+'.txt';
-	fs.readFile(reqFile, function(err,data){
-		if(err) throw err
-		res.send(data);
-	})
+	var html = '<div><ul class="teamlist">'
+	lineReader.eachLine(reqFile, function(line, last) {
+	  //console.log(line);
+	  var frag = '<li class="teamlist-item">'+line+'</li>';
+	  html += frag;
+
+	  if(last){
+
+	    res.send(html+'</ul></div>');
+	  }
+	});
+
+	// lineReader.open(reqFile, function(reader) {
+	//   if (reader.hasNextLine()) {
+	//     reader.nextLine(function(line) {
+	//       console.log('a'+line);
+	//     });
+	//   }
+	// });
+
+	// var html = '<ul>';
+	
+	// var lr = new LineByLineReader(reqFile);
+
+	// lr.on('line', function (line) {
+	//    //console.log(line);
+	//    var frag = '<li>'+line+'</li>';
+	//   // console.log(frag);
+	//    html += frag;
+	// });
+	// console.log(html);
+	// res.send(html+'</ul>');
+
+	// fs.readFile(reqFile, function(err,data){
+	// 	if(err) throw err
+	// 	res.send(data);
+	// })
 	//res.send('wheed')
 });
