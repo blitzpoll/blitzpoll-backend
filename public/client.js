@@ -27,8 +27,8 @@ jQuery(function($){
     countdownindicator.show();
     //offset to compensate latency:
     var offset = 1;
-    count = parseInt(data.time)+ offset;
-    qText = data.question;
+    count = parseInt(data.timeout)+ offset;
+    qText = data.text;
     activequestion.text(qText);
     counter=setInterval(timer, 1000);
     function timer(){
@@ -37,14 +37,26 @@ jQuery(function($){
        if (count <= 0)
         {
            clearTimer();
-           //countdown.text('');
            countdownindicator.hide();
            readyindicator.show();
            return;
         }
     }
-    //countdown.text(data.time);
   };
+
+
+  $('#sendnewgame').click(function(e){
+    e.preventDefault();
+    var home = $('#home-name').val();
+    var away = $('#away-name').val();
+    var game = {
+      home: home,
+      away:away
+    }
+    socket.emit('new game', game);
+  });
+
+
 
  $('#newquestion-form').submit(function(e){
     e.preventDefault();
@@ -58,8 +70,10 @@ jQuery(function($){
   });
 
  socket.on('new question added', function(data){
-    $('#q-container').append('<div>'+data.data.question+'</div>');
-    activateTimer(data.data);
+    //var timeout = parseInt(data.timeout);
+    $('#q-container').append('<div>'+data.text+'</div>');
+    console.log(data);
+    activateTimer(data);
     resetForm();
   });
 
@@ -67,6 +81,30 @@ jQuery(function($){
     for(var i= docs.length-1; i>0; i--){
       displayQuestions(docs[i]);
     }
+
+ });
+
+ socket.on('new game initiated', function(game){
+
+  $('#newgamesetup').html('');
+
+  $('#newgamesetup').html('<div>'+game.id+'</div><div><span>'+game.home+'</span>'+' : '+'<span>'+game.away+'</span></div>');
+
+ });
+
+
+ socket.on('file saved', function(data){
+  debugger;
+  if(data.which == 'home'){
+    $('#homeformcontainer').html('');
+    var html = '<img src="'+data.path+'"/>'
+    $('#homeformcontainer').html(html);
+  } else {
+    $('#awayformcontainer').html('');
+    var html = '<img src="'+data.path+'"/>'
+    $('#awayformcontainer').html(html);
+  }
+
 
  });
 

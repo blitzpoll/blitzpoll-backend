@@ -54,19 +54,26 @@ html
                 data-parent="accordion1" href="#collapseOne") Das Spiel
             div#collapseOne.accordion-body.collapse(style="height:0px;")
               div.accordion-inner
-                h5 Home
+                div#newgamesetup
+                  label Home
+                  input(type="text" id="home-name")
+                  label Away
+                  input(type="text" id="away-name")
+                  br
+                  button#sendnewgame.btn.btn-primary Spiel starten
                 div
-                  img(src="files/home.png")
-                form(method="POST", action="/file-upload?q=home", enctype="multipart/form-data")
-                 input(type="file", name="homefile")
-                 input(type="submit")
+                  //- img(src='/files/'+ currentGameId + '/home.png')
+                div#homeformcontainer
+                  form(method="POST", action="/file-upload?q=home", enctype="multipart/form-data")
+                   input(type="file", name="homefile")
+                   input(type="submit")
                 br
-                h5 Away
                 div
-                  img(src="files/away.png")
-                form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
-                 input(type="file", name="file")
-                 input(type="submit")
+                div#awayformcontainer
+                   //- img(src='/files/'+ currentGameId + '/away.png')
+                  form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
+                    input(type="file", name="file")
+                    input(type="submit")
         //---------------------
         div.accordion#accordion2
           div.accordion-group
