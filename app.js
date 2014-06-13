@@ -69,16 +69,57 @@ app.get('/teamInfo', function(req,res){
 	var reqFile = 'world-cup/2014--brazil/squads/'+req.query.country+'.txt';
 	var html = '<div><ul class="teamlist">'
 	lineReader.eachLine(reqFile, function(line, last) {
-	  //console.log(line);
+		
+	  // var name = line.substr(0, line.indexOf('##'));
+	  // var nr = name.match(nrPatt);
+	  // var pos = name.match(posPatt);
+	  // var club = line.substr(line.indexOf('##'));
+	  // //console.log(pos);
+	  // html += '<div>'+'<span>'+nr+'</span>'+'<span>'+name+'</span>'+'<span>'+club+'</span>'+'</div>';
+
 	  var frag = '<li class="teamlist-item">'+line+'</li>';
 	  html += frag;
-
+	  // var frag = parseTeamInfo(line);
+	  // html += frag;
 	  if(last){
 
 	    res.send(html+'</ul></div>');
 	  }
 	});
 });
+
+parseTeamInfo = function(line){
+	/*regexp*/
+	var html = '';
+	if(line == ''){
+		html = '<li></li>'
+	} else {
+		var nrPatt = /\((.*?)\)/;
+		var posPatt = /[A-Z0-9]{2,}/;
+		var numGamesPatt =  /\d+/;
+		var clubPatt = /\,(.*)/;
+		var namePatt = /[A-Z]{2,}(.*)/;
+
+		var nr_pos_name = line.substr(0, line.indexOf('##'));
+		var games_club = line.substr(line.indexOf('##'));
+
+		var nr = nr_pos_name.match(nrPatt)[0];
+
+		var pos = nr_pos_name.match(posPatt)[0];
+		var name = nr_pos_name.match(namePatt)[1].substr(1);
+		var games = games_club.match(numGamesPatt)[0];
+		var club = games_club.match(clubPatt)[1].substr(1);
+		// console.log(nr);
+		// console.log(pos);
+		// console.log(name);
+		// console.log(games);
+		// console.log(club);
+		html = '<li><div class="ti-nr">'+nr+'</div><div class="ti-pos">'+pos+'</div><div class="ti-name">'+name+'</div><div class="ti-games">'+games+'</div><div class="ti-club">'+club+'</div></li>'
+		
+	}
+
+	return html;
+}
 
 app.post('/file-upload', function(req,res,next){
 	var query = url.parse(req.url,true).query.q;

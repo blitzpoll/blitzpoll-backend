@@ -20,3 +20,11 @@
 .teamlist-item{
 
 }
+
+.ti-nr,
+.ti-pos,
+.ti-name,
+.ti-games,
+.ti-club{
+	display:inline;
+}
