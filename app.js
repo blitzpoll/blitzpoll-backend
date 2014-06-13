@@ -8,16 +8,20 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	dbHost = process.env.DBHOST || 'mongodb://127.0.0.1/questions',
 	net = require('net'),
-	lineReader = require('line-reader');
+	lineReader = require('line-reader'),
+	http = require('http'),
+	busboy = require('connect-busboy');;
 
 server.listen(5000);
 
 app.use(express.static(__dirname + '/public'));
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-
-app.use(express.static(__dirname + '/public'));
 app.get('/', routes.index);
+
+app.use(busboy());
+
 
 mongoose.connect(dbHost, function(err){
 	if(err){
@@ -38,8 +42,6 @@ var Question = mongoose.model('Question', questionSchema);
 var client = net.connect({ path: '/tmp/hacksports.sock' }, function() {
     console.log('got connection!');
 });
-
-
 
 io.sockets.on('connection', function(socket){
 	console.log('socket connection');
@@ -63,7 +65,6 @@ io.sockets.on('connection', function(socket){
 	});
 });
 
-
 app.get('/teamInfo', function(req,res){
 	var reqFile = 'world-cup/2014--brazil/squads/'+req.query.country+'.txt';
 	var html = '<div><ul class="teamlist">'
@@ -77,31 +78,19 @@ app.get('/teamInfo', function(req,res){
 	    res.send(html+'</ul></div>');
 	  }
 	});
+});
 
-	// lineReader.open(reqFile, function(reader) {
-	//   if (reader.hasNextLine()) {
-	//     reader.nextLine(function(line) {
-	//       console.log('a'+line);
-	//     });
-	//   }
-	// });
-
-	// var html = '<ul>';
-	
-	// var lr = new LineByLineReader(reqFile);
-
-	// lr.on('line', function (line) {
-	//    //console.log(line);
-	//    var frag = '<li>'+line+'</li>';
-	//   // console.log(frag);
-	//    html += frag;
-	// });
-	// console.log(html);
-	// res.send(html+'</ul>');
-
-	// fs.readFile(reqFile, function(err,data){
-	// 	if(err) throw err
-	// 	res.send(data);
-	// })
-	//res.send('wheed')
+app.post('/file-upload', function(req,res,next){
+	var query = url.parse(req.url,true).query.q;
+	console.log(query);
+	var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log("Uploading: " + filename); 
+        fstream = fs.createWriteStream(__dirname + '/files/' + query +'.png');
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.redirect('back');
+        });
+    });
 });

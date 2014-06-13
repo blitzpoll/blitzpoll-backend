@@ -54,13 +54,14 @@ html
                 data-parent="accordion1" href="#collapseOne") Das Spiel
             div#collapseOne.accordion-body.collapse(style="height:0px;")
               div.accordion-inner
-                h3 Home
-
+                h5 Home
+                div
+                  img(src="/files")
                 form(method="POST", action="/file-upload?q=home", enctype="multipart/form-data")
-                 input(type="file", name="file")
+                 input(type="file", name="homefile")
                  input(type="submit")
                 br
-                h3 Away
+                h5 Away
                 form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
                  input(type="file", name="file")
                  input(type="submit")
