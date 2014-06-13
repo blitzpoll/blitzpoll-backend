@@ -56,12 +56,14 @@ html
               div.accordion-inner
                 h5 Home
                 div
-                  img(src="/files")
+                  img(src="files/home.png")
                 form(method="POST", action="/file-upload?q=home", enctype="multipart/form-data")
                  input(type="file", name="homefile")
                  input(type="submit")
                 br
                 h5 Away
+                div
+                  img(src="files/away.png")
                 form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
                  input(type="file", name="file")
                  input(type="submit")

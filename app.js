@@ -10,7 +10,7 @@ var express = require('express'),
 	net = require('net'),
 	lineReader = require('line-reader'),
 	http = require('http'),
-	busboy = require('connect-busboy');;
+	busboy = require('connect-busboy');
 
 server.listen(5000);
 
