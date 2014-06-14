@@ -94,7 +94,7 @@ jQuery(function($){
 
 
  socket.on('file saved', function(data){
-  debugger;
+ 
   if(data.which == 'home'){
     $('#homeformcontainer').html('');
     var html = '<img src="'+data.path+'"/>'
