@@ -22,31 +22,7 @@ html
 .container
   .hero-unit
     div.row
-      div.span5
-       
-        div#ready-indicator.alert.alert-success Zur Zeit ist keine Frage aktiv. Ready to moderate.
-        div#countdown-indicator.alert.alert-danger Vorsicht! Zur Zeit ist noch die Frage: "
-          span(style='margin:0; font-weight:bold;')#active-question
-          span " für: 
-          span(style='font-weight:bold;')#countdown
-          span(style='margin-left:5px;') Sekunden aktiv. Eine neue Frage absenden würde diese in den Hintergrund rücken. 
-        form#newquestion-form
-          fieldset
-            h3 Neue Frage
-            div.control-group
-
-              div.controls
-                textarea#question
-            div.control-group
-              label.control-label Antworten (Komma getrennt)
-                div.controls
-                  input#possible-answers
-              label.control-label Zeit (In Sekunden)
-                div.controls
-                  input#time-frame
-            button#sendquestion.btn.btn-primary Senden
-      div.span5
-        //---------------------
+      div.span10
         div.accordion#accordion1
           div.accordion-group
             div.accordion-heading
@@ -74,6 +50,30 @@ html
                   form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
                     input(type="file", name="file")
                     input(type="submit")
+    div#question-main.row
+      div.span5 
+        div#ready-indicator.alert.alert-success Zur Zeit ist keine Frage aktiv. Ready to moderate.
+        div#countdown-indicator.alert.alert-danger Vorsicht! Zur Zeit ist noch die Frage: "
+          span(style='margin:0; font-weight:bold;')#active-question
+          span " für: 
+          span(style='font-weight:bold;')#countdown
+          span(style='margin-left:5px;') Sekunden aktiv. Eine neue Frage absenden würde diese in den Hintergrund rücken. 
+        form#newquestion-form
+          fieldset
+            h3 Neue Frage
+            div.control-group
+
+              div.controls
+                textarea#question
+            div.control-group
+              label.control-label Antworten (Komma getrennt)
+                div.controls
+                  input#possible-answers
+              label.control-label Zeit (In Sekunden)
+                div.controls
+                  input#time-frame
+            button#sendquestion.btn.btn-primary Senden
+      div.span5
         //---------------------
         div.accordion#accordion2
           div.accordion-group

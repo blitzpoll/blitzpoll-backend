@@ -8,7 +8,7 @@ jQuery(function($){
   var activequestion = $('#active-question');
   countdownindicator.hide();
   readyindicator.show();
-
+  $("#question-main").hide();
   var countdown = $('#countdown');
   var count = 0;
   var counter;
@@ -85,7 +85,9 @@ jQuery(function($){
  });
 
  socket.on('new game initiated', function(game){
-
+  if(game.id.length){
+    $("#question-main").show();
+  }
   $('#newgamesetup').html('');
 
   $('#newgamesetup').html('<div>'+game.id+'</div><div><span>'+game.home+'</span>'+' : '+'<span>'+game.away+'</span></div>');
@@ -94,7 +96,7 @@ jQuery(function($){
 
 
  socket.on('file saved', function(data){
- 
+
   if(data.which == 'home'){
     $('#homeformcontainer').html('');
     var html = '<img src="'+data.path+'"/>'

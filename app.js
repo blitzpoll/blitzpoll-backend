@@ -29,7 +29,7 @@ d.on('remote', function (remote) {
 
 	io.sockets.on('connection', function(socket){
 		console.log('socket connection');
-
+		console.log(socket.id)
 		socket.on('new game', function(data){
 
 			
@@ -63,37 +63,37 @@ d.on('remote', function (remote) {
 		});
 
 
-		app.post('/file-upload', function(req,res,next){
-			fs.mkdir(__dirname + '/files/'+ currentGameId, function(err){
-				if(err)
-					console.log(err);
-			});
-			var query = url.parse(req.url,true).query.q;
+		// app.post('/file-upload', function(req,res,next){
+		// 	fs.mkdir(__dirname + '/files/'+ currentGameId, function(err){
+		// 		if(err)
+		// 			console.log(err);
+		// 	});
+		// 	var query = url.parse(req.url,true).query.q;
 
-			var fstream;
-		    req.pipe(req.busboy);
+		// 	var fstream;
+		//     req.pipe(req.busboy);
 
-		    req.busboy.on('file', function (fieldname, file, filename) {
-		        console.log("Uploading: " + filename); 
-		        fstream = fs.createWriteStream(__dirname + '/files/'+currentGameId+'/' + query +'.png');
-		        file.pipe(fstream);
-		        fstream.on('close', function () {
-		        	//res.redirect('back');
-		        	console.log('######')
-		        	console.log(currentGameId)
-		        	console.log(query)
-		        	if(query == 'home'){
-		        		var path = '/files/'+currentGameId+'/home.png';
-		        		console.log(path)
-		           		socket.emit('file saved',{path:path,which:'home'});
-		        	} else {
-		        		var path = '/files/'+currentGameId+'/away.png';
-		           		socket.emit('file saved',{path:path,which:'away'});
-		        	}
+		//     req.busboy.on('file', function (fieldname, file, filename) {
+		//         console.log("Uploading: " + filename); 
+		//         fstream = fs.createWriteStream(__dirname + '/files/'+currentGameId+'/' + query +'.png');
+		//         file.pipe(fstream);
+		//         fstream.on('close', function () {
+		//         	//res.redirect('back');
+		//         	console.log('######')
+		//         	console.log(currentGameId)
+		//         	console.log(query)
+		//         	if(query == 'home'){
+		//         		var path = '/files/'+currentGameId+'/home.png';
+		//         		console.log(path)
+		//            		socket.emit('file saved',{path:path,which:'home'});
+		//         	} else {
+		//         		var path = '/files/'+currentGameId+'/away.png';
+		//            		socket.emit('file saved',{path:path,which:'away'});
+		//         	}
 		        	
-		        });
-		    });
-		});
+		//         });
+		//     });
+		// });
 
 
 	});
