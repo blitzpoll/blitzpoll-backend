@@ -27,6 +27,12 @@
 .ti-games,
 .ti-club{
 	display:inline;
+	margin:0 3px;
+}
+
+.ti-name{
+	font-weight: bold;
+	font-size:110%;
 }
 
 div.dropdown a{

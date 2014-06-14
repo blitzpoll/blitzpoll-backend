@@ -124,7 +124,7 @@ c.pipe(d).pipe(c);
 
 app.get('/teamInfo', function(req,res){
 	var reqFile = 'world-cup/2014--brazil/squads/'+req.query.country+'.txt';
-	var html = '<div><ul class="teamlist">'
+	var html = '<div><ul class="teamlist">';
 	lineReader.eachLine(reqFile, function(line, last) {
 		
 	  // var name = line.substr(0, line.indexOf('##'));
@@ -134,9 +134,10 @@ app.get('/teamInfo', function(req,res){
 	  // //console.log(pos);
 	  // html += '<div>'+'<span>'+nr+'</span>'+'<span>'+name+'</span>'+'<span>'+club+'</span>'+'</div>';
 
-	  var frag = '<li class="teamlist-item">'+line+'</li>';
+	  //var frag = '<li class="teamlist-item">'+line+'</li>';
+	  
+	  var frag = parseTeamInfo(line);
 	  html += frag;
-	  // var frag = parseTeamInfo(line);
 	  // html += frag;
 	  if(last){
 
@@ -162,16 +163,21 @@ parseTeamInfo = function(line){
 
 		var nr = nr_pos_name.match(nrPatt)[0];
 
-		var pos = nr_pos_name.match(posPatt)[0];
-		var name = nr_pos_name.match(namePatt)[1].substr(1);
+		//var pos = nr_pos_name.match(posPatt)[0];
+		var name = nr_pos_name.match(namePatt)[1].substr(2).trim();
 		var games = games_club.match(numGamesPatt)[0];
 		var club = games_club.match(clubPatt)[1].substr(1);
+
+		// console.log('----------------');
+
 		// console.log(nr);
-		// console.log(pos);
+		// //console.log(pos);
 		// console.log(name);
 		// console.log(games);
 		// console.log(club);
-		html = '<li><div class="ti-nr">'+nr+'</div><div class="ti-pos">'+pos+'</div><div class="ti-name">'+name+'</div><div class="ti-games">'+games+'</div><div class="ti-club">'+club+'</div></li>'
+		
+		// console.log('----------------');
+		html = '<li><div class="ti-nr">'+nr+'</div><div class="ti-name">'+name+'</div><div class="ti-games">'+games+'</div><div class="ti-club">'+club+'</div></li>'
 		
 	}
 
