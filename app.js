@@ -30,9 +30,8 @@ d.on('remote', function (remote) {
 	io.sockets.on('connection', function(socket){
 		console.log('socket connection');
 		console.log(socket.id)
-		socket.on('new game', function(data){
 
-			
+		socket.on('new game', function(data){
 			remote.setCurrentGame(data.home, data.away, function(err, id) {
 				console.log('set current game ' + id);
 				currentGameId = id;
@@ -44,6 +43,23 @@ d.on('remote', function (remote) {
 				};
 				socket.emit('new game initiated',newGame);
 		    });    
+		});
+
+		socket.on('set home client', function(data){
+			var string = data.home.substr(3);
+			var name = string.charAt(0).toUpperCase() + string.slice(1);
+			var dataUrl = data.home;
+			var flagUrl = '/flags/'+ data.home +".png";
+			var html = '<div id="home-team-set"><img src='+flagUrl+' /><span data-url='+dataUrl+' class="team-name">'+name+'</span></div>';
+			socket.emit('set home server', html)
+		});
+		socket.on('set away client', function(data){
+			var string = data.away.substr(3);
+			var name = string.charAt(0).toUpperCase() + string.slice(1);
+			var dataUrl = data.away;
+			var flagUrl = '/flags/'+ data.away +".png";
+			var html = '<div id="away-team-set"><img src='+flagUrl+' /><span data-url='+dataUrl+' class="team-name">'+name+'</span></div>';
+			socket.emit('set away server', html)
 		});
 
 		socket.on('new question', function(data){

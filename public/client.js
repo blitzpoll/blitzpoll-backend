@@ -19,6 +19,33 @@ jQuery(function($){
     time.val('');
   };
 
+  $('.choose-home').click(function(e){
+    e.preventDefault();
+    var team = {
+        home : $(this).children(":first-child").attr('href')
+    } 
+    socket.emit('set home client', team);
+  }); 
+
+  $('.choose-away').click(function(e){
+    e.preventDefault();
+    var team = {
+        away : $(this).children(":first-child").attr('href')
+    } 
+    socket.emit('set away client', team);
+  }); 
+
+  socket.on('set home server', function(data){
+    $('#home-team-container').html('');
+    $('#home-team-container').html(data);
+
+  });
+
+  socket.on('set away server', function(data){
+    $('#away-team-container').html('');
+    $('#away-team-container').html(data);
+  });
+
   var clearTimer = function(){
     clearInterval(counter);
   }
@@ -44,11 +71,21 @@ jQuery(function($){
     }
   };
 
+   $('.team-info').click(function(e){
+
+    e.preventDefault();
+    var country = $(this).children('a').attr('href');
+    $.get('/teamInfo', {country:country}, function(data){
+      $('#team-container').html('<div>'+data+'</div>');
+    });
+   });
+
 
   $('#sendnewgame').click(function(e){
+
     e.preventDefault();
-    var home = $('#home-name').val();
-    var away = $('#away-name').val();
+    var home = $('#home-team-set > span').attr('data-url');
+    var away = $('#away-team-set > span').attr('data-url');
     var game = {
       home: home,
       away:away
@@ -77,49 +114,45 @@ jQuery(function($){
     resetForm();
   });
 
- socket.on('load old questions', function(docs){
-    for(var i= docs.length-1; i>0; i--){
-      displayQuestions(docs[i]);
-    }
+ // socket.on('load old questions', function(docs){
+ //    for(var i= docs.length-1; i>0; i--){
+ //      displayQuestions(docs[i]);
+ //    }
 
- });
+ // });
 
  socket.on('new game initiated', function(game){
   if(game.id.length){
+    var homeTeamInfo = '<a class="team-info" href='+game.home+'>'+game.home.substr(3);
+    var awayTeamInfo = '<a class="team-info" href='+game.away+'>'+game.away.substr(3);
+    $('#sendnewgame').hide();
     $("#question-main").show();
+
+    $('#team-info-home').append(homeTeamInfo);
+    $('#team-info-away').append(awayTeamInfo);
+    
   }
-  $('#newgamesetup').html('');
-
-  $('#newgamesetup').html('<div>'+game.id+'</div><div><span>'+game.home+'</span>'+' : '+'<span>'+game.away+'</span></div>');
-
  });
 
 
- socket.on('file saved', function(data){
+ // socket.on('file saved', function(data){
 
-  if(data.which == 'home'){
-    $('#homeformcontainer').html('');
-    var html = '<img src="'+data.path+'"/>'
-    $('#homeformcontainer').html(html);
-  } else {
-    $('#awayformcontainer').html('');
-    var html = '<img src="'+data.path+'"/>'
-    $('#awayformcontainer').html(html);
-  }
+ //  if(data.which == 'home'){
+ //    $('#homeformcontainer').html('');
+ //    var html = '<img src="'+data.path+'"/>'
+ //    $('#homeformcontainer').html(html);
+ //  } else {
+ //    $('#awayformcontainer').html('');
+ //    var html = '<img src="'+data.path+'"/>'
+ //    $('#awayformcontainer').html(html);
+ //  }
 
 
- });
+ // });
 
  function displayQuestions(data){
    $('#q-container').append('<div>'+data.question+'</div>');
  };
 
- $('.info-team').click(function(e){
-  e.preventDefault();
-  var country = $(this).children('a').attr('href');
-  $.get('/teamInfo', {country:country}, function(data){
-    $('#team-container').html('<div>'+data+'</div>');
-  });
- });
 
 });

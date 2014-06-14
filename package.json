@@ -20,6 +20,6 @@
     "line-by-line": "~0.1.1",
     "line-reader": "~0.2.3",
     "connect-busboy": "0.0.1",
-    "dnode": "^1.2.0"
+    "dnode": "~1.2.0"
   }
 }

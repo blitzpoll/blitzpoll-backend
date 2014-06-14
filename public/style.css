@@ -28,3 +28,28 @@
 .ti-club{
 	display:inline;
 }
+
+div.dropdown a{
+
+}
+
+.team-name{
+	font-size: 24px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+#team-info-list{
+	list-style: none;
+}
+
+#team-info-list li{
+	list-style: none;
+	float:left;
+}
+
+#team-info-home, #team-info-away{
+	list-style: none;
+	float:left;
+	margin-right:10px;
+}
