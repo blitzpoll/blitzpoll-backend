@@ -35,7 +35,7 @@ html
                   li.choose-home 
                     a(href="ar-argentina") Argentina
                   li.choose-home 
-                    a(href="au-australia") Australio
+                    a(href="au-australia") Australia
                   li.choose-home 
                     a(href="ba-bosnia-herzegovina") Bosnia
                   li.choose-home 
@@ -52,6 +52,8 @@ html
                     a(href="cm-cameroon") Cameroon
                   li.choose-home 
                     a(href="co-colombia") Columbia
+                  li.choose-home
+                    a(href="cr-costa-rica") Costa Rica
                   li.choose-home 
                     a(href="de-deutschland") Germany
                   li.choose-home 
@@ -102,7 +104,7 @@ html
                   li.choose-away 
                     a(href="ar-argentina") Argentina
                   li.choose-away 
-                    a(href="au-australia") Australio
+                    a(href="au-australia") Australia
                   li.choose-away 
                     a(href="ba-bosnia-herzegovina") Bosnia
                   li.choose-away 
@@ -119,6 +121,8 @@ html
                     a(href="cm-cameroon") Cameroon
                   li.choose-away 
                     a(href="co-colombia") Columbia
+                  li.choose-away 
+                    a(href="cr-costa-rica") Costa Rica
                   li.choose-away 
                     a(href="de-deutschland") Germany
                   li.choose-away 
@@ -162,33 +166,6 @@ html
           
         br
         button#sendnewgame.btn.btn-primary Spiel starten
-        //- div.accordion#accordion1
-        //-   div.accordion-group
-        //-     div.accordion-heading
-        //-       a.accordion-toggle.collapsed(data-toggle="collapse" 
-        //-         data-parent="accordion1" href="#collapseOne") Das Spiel
-            //- div#collapseOne.accordion-body.collapse(style="height:0px;")
-            //-   div.accordion-inner
-            //-     div#newgamesetup.hero-unit
-                  //- label Home
-                  //- input(type="text" id="home-name")
-                  //- label Away
-                  //- input(type="text" id="away-name")
-                  //- br
-                  //- button#sendnewgame.btn.btn-primary Spiel starten
-                //- div
-                  //- img(src='/files/'+ currentGameId + '/home.png')
-                //- div#homeformcontainer
-                //-   form(method="POST", action="/file-upload?q=home", enctype="multipart/form-data")
-                //-    input(type="file", name="homefile")
-                //-    input(type="submit")
-                //- br
-                //- div
-                //- div#awayformcontainer
-                //-    //- img(src='/files/'+ currentGameId + '/away.png')
-                //-   form(method="POST", action="/file-upload?q=away", enctype="multipart/form-data")
-                //-     input(type="file", name="file")
-                //-     input(type="submit")
     div#question-main.row
       div.span5 
         div#ready-indicator.alert.alert-success Zur Zeit ist keine Frage aktiv. Ready to moderate.
@@ -201,16 +178,18 @@ html
           fieldset
             h3 Neue Frage
             div.control-group
-
               div.controls
                 textarea#question
-            div.control-group
-              label.control-label Antworten (Komma getrennt)
-                div.controls
-                  input#possible-answers
-              label.control-label Zeit (In Sekunden)
-                div.controls
-                  input#time-frame
+              div.control-group
+                label.control-label Spielminute
+                  div.controls
+                    input#game-minute 
+                label.control-label Antworten (Komma getrennt)
+                  div.controls
+                    input#possible-answers
+                label.control-label Zeit (In Sekunden)
+                  div.controls
+                    input#time-frame
             button#sendquestion.btn.btn-primary Senden
       div.span5
         //---------------------
@@ -230,101 +209,18 @@ html
                 data-parent="accordion3" href="#collapseThree") Team Info
             div#collapseThree.accordion-body.collapse(style="height:0px;")
               div.accordion-inner
-                div#q-container
-                  ul#team-list-info
-                    li#team-info-home.team-info
-                    li#team-info-away.team-info
-                    //- li.choose-home 
-                    //-   a(href="ar-argentina") ar
-                    //- li.choose-home 
-                    //-   a(href="au-australia") au
-                    //- li.choose-home 
-                    //-   a(href="ba-bosnia-herzegovina") ba
-                    //- li.choose-home 
-                    //-   a(href="be-belgium") be
-                    //- li.choose-home 
-                    //-   a(href="br-brazil") br
-                    //- li.choose-home 
-                    //-   a(href="ch-switzerland") ch
-                    //- li.choose-home 
-                    //-   a(href="ci-cote-d-ivoire") ci
-                    //- li.choose-home 
-                    //-   a(href="cl-chile") cl
-                    //- li.choose-home 
-                    //-   a(href="cm-cameroon") cm
-                    //- li.choose-home 
-                    //-   a(href="co-colombia") co
-                    //- li.choose-home 
-                    //-   a(href="de-deutschland") de
-                    //- li.choose-home 
-                    //-   a(href="dz-algeria") dz
-                    //- li.choose-home 
-                    //-   a(href="ec-ecuador") ec
-                    //- li.choose-home 
-                    //-   a(href="en-england") en
-                    //- li.choose-home 
-                    //-   a(href="fr-france") fr
-                    //- li.choose-home 
-                    //-   a(href="gh-ghana") gh
-                    //- li.choose-home 
-                    //-   a(href="gr-greece") gr
-                    //- li.choose-home 
-                    //-   a(href="hn-honduras") hn
-                    //- li.choose-home 
-                    //-   a(href="hr-croatia") hr
-                    //- li.choose-home 
-                    //-   a(href="ir-iran") ir
-                    //- li.choose-home 
-                    //-   a(href="it-italy") it
-                    //- li.choose-home 
-                    //-   a(href="jp-japan") jp
-                    //- li.choose-home 
-                    //-   a(href="kr-south-korea") kr
-                    //- li.choose-home 
-                    //-   a(href="mx-mexico") mx
-                    //- li.choose-home 
-                    //-   a(href="ng-nigeria") ng
-                    //- li.choose-home 
-                    //-   a(href="nl-netherlands") nl
-                    //- li.choose-home 
-                    //-   a(href="pt-portugal") pt
-                    //- li.choose-home 
-                    //-   a(href="ru-russia") ru
-                    //- li.choose-home 
-                    //-   a(href="us-united-states") us
-                    //- li.choose-home 
-                    //-   a(href="uy-uruguay") uy
-                div#team-container
+                div#team-list-info
+                  div.btn.btn-inverse#team-info-home.team-info
+                  div.btn.btn-inverse#team-info-away.team-info
+              div#team-container
 
 
 
 
-         //- br
-         //- div.accordion#accordion
-         //-  div.accordion-group
-         //-    div.accordion-heading
-         //-      a.accordion-toggle(data-toggle="collapse" data-parent="accordion") Bisherige Fragen
-         //-    div#collapseOne.accordion-body.collpase.in
-         //-      div.accordion.inner
-         //-        div=questions
 
-         //-  div.accordion-group
-         //-    div.accordion-heading
-         //-      a.accordion-toggle(data-toggle="collapse" data-parent="accordion") Aufstellung
-         //-    div#collapseTwo.accordion-body.collpase.in
-         //-      div.accordion.inner
-         //-        img(src="/images/sample.png")
 
-         //-  div.accordion-group
-         //-    div.accordion-heading
-         //-      a.accordion-toggle(data-toggle="collapse" data-parent="accordion") Ersatzbank
-         //-    div#collapseThree.accordion-body.collpase.in
-         //-      div.accordion.inner
-         //-        div
-         //-  div.accordion-group
-         //-    div.accordion-heading
-         //-      a.accordion-toggle(data-toggle="collapse" data-parent="accordion") Verletze / Gesperrte
-         //-    div#collapseFour.accordion-body.collpase.in
-         //-      div.accordion.inner
-         //-        div
+
+
+
+
 

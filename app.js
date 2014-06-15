@@ -66,7 +66,7 @@ d.on('remote', function (remote) {
 			var newQuestion= {
 				text: data.question,
 				answers: data.answers,
-				minute: 40,
+				minute: data.minute,
 				timeout: data.time
 			};
 

@@ -54,8 +54,19 @@ div.dropdown a{
 	float:left;
 }
 
+#team-info-home a, #team-info-away a{
+	text-decoration: none;
+	color:white;
+}
 #team-info-home, #team-info-away{
 	list-style: none;
 	float:left;
 	margin-right:10px;
+}
+
+.hero-unit li{
+	line-height:17px;
+}
+.teamlist{
+	margin-top:30px;
 }

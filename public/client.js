@@ -1,6 +1,7 @@
 jQuery(function($){
 	var socket = io.connect();
-	var question = $('#question');
+  var question = $('#question');
+	var gameMinute = $('#game-minute');
   var answers = $('#possible-answers');
   var time = $('#time-frame');
   var countdownindicator =$('#countdown-indicator');
@@ -16,6 +17,7 @@ jQuery(function($){
   var resetForm = function(){
     question.val('');
     answers.val('');
+    gameMinute.val('');
     time.val('');
   };
 
@@ -82,10 +84,21 @@ jQuery(function($){
 
 
   $('#sendnewgame').click(function(e){
-
+    
     e.preventDefault();
     var home = $('#home-team-set > span').attr('data-url');
     var away = $('#away-team-set > span').attr('data-url');
+
+    //validate
+    if(home === undefined || away === undefined){
+      alert('Team missing.');
+      return false;
+    }
+    if( home === away){
+      alert('Home and away are the same');
+      return false;
+    }
+
     var game = {
       home: home,
       away:away
@@ -98,9 +111,24 @@ jQuery(function($){
  $('#newquestion-form').submit(function(e){
     e.preventDefault();
     clearTimer();
+
+    //validate
+    var tmpTime = time.val();
+    var answersLength = answers.val().split(',').length;
+    
+    if(answersLength <= 1){
+      alert('Invalid Number of answers (must be bigger than one)');
+      return false;
+    }
+    if( isNaN(parseFloat(tmpTime)) ){
+      alert('Time value not numeric');
+      return false;
+    }
+
     var newQuestion = {
       question: question.val(),
       answers: answers.val().split(','),
+      minute: gameMinute.val(),
       time: time.val()
     }
     socket.emit('new question', newQuestion);  	
@@ -114,17 +142,13 @@ jQuery(function($){
     resetForm();
   });
 
- // socket.on('load old questions', function(docs){
- //    for(var i= docs.length-1; i>0; i--){
- //      displayQuestions(docs[i]);
- //    }
-
- // });
 
  socket.on('new game initiated', function(game){
   if(game.id.length){
-    var homeTeamInfo = '<a class="team-info" href='+game.home+'>'+game.home.substr(3);
-    var awayTeamInfo = '<a class="team-info" href='+game.away+'>'+game.away.substr(3);
+    var homeNameOnly = game.home.substr(3);
+    var awayNameOnly = game.away.substr(3);
+    var homeTeamInfo = '<a class="team-info" href='+game.home+'>'+homeNameOnly.charAt(0).toUpperCase() + homeNameOnly.slice(1);
+    var awayTeamInfo = '<a class="team-info" href='+game.away+'>'+awayNameOnly.charAt(0).toUpperCase() + awayNameOnly.slice(1);
     $('#sendnewgame').hide();
     $("#question-main").show();
 
@@ -135,20 +159,7 @@ jQuery(function($){
  });
 
 
- // socket.on('file saved', function(data){
 
- //  if(data.which == 'home'){
- //    $('#homeformcontainer').html('');
- //    var html = '<img src="'+data.path+'"/>'
- //    $('#homeformcontainer').html(html);
- //  } else {
- //    $('#awayformcontainer').html('');
- //    var html = '<img src="'+data.path+'"/>'
- //    $('#awayformcontainer').html(html);
- //  }
-
-
- // });
 
  function displayQuestions(data){
    $('#q-container').append('<div>'+data.question+'</div>');
