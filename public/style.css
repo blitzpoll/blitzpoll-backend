@@ -70,3 +70,8 @@ div.dropdown a{
 .teamlist{
 	margin-top:30px;
 }
+
+
+#team-container{
+	min-height: 30px;
+}
