@@ -75,3 +75,12 @@ div.dropdown a{
 #team-container{
 	min-height: 30px;
 }
+
+.question-list-item{
+	margin-bottom:10px;
+}
+
+.question-list-time{
+	font-size: 50%;
+	margin-top:-5px;
+}

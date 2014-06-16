@@ -11,7 +11,8 @@ var express = require('express'),
 	lineReader = require('line-reader'),
 	http = require('http'),
 	busboy = require('connect-busboy'),
-	dnode = require('dnode');
+	dnode = require('dnode'),
+	auth = require('http-auth');
 
 server.listen(5000);
 currentGameId = null;
@@ -20,10 +21,16 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.get('/', routes.index);
+
 
 app.use(busboy());
 
+var basic = auth.basic({
+  realm: 'journalist',
+  file: __dirname +'/users.htpasswd'
+});
+app.use(auth.connect(basic));
+app.get('/', routes.index);
 var d = dnode();
 d.on('remote', function (remote) {
 

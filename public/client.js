@@ -136,7 +136,8 @@ jQuery(function($){
 
  socket.on('new question added', function(data){
     //var timeout = parseInt(data.timeout);
-    $('#q-container').append('<div>'+data.text+'</div>');
+
+    $('#q-container').append('<li class="question-list-item">'+data.text+'<span class="question-list-time">( '+data.minute+' )</span></li>');
     console.log(data);
     activateTimer(data);
     resetForm();
